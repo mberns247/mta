@@ -21,22 +21,15 @@ export async function GET(request: NextRequest) {
   const headers: Record<string, string> = {};
   if (key) headers["x-api-key"] = key;
 
-  const stopId = overrideStop || envStop;
+  // Manhattan-bound only. At Gates Av, feed J30S = Manhattan (we show as J30N), feed J30N = other direction (we show as J30S). Swap so labels match reality.
+  const feedStopFor = (label: string) => (label === "J30N" ? "J30S" : "J30N");
 
-  if (stopId) {
-    const arrivals = await fetchArrivalsForStop(GTFS_FEED_URL, headers, stopId);
-    return NextResponse.json({ arrivals, stopId });
-  }
-
-  // Try both platforms and use the one with more arrivals in next ~30 min
-  const [nArr, sArr] = await Promise.all([
-    fetchArrivalsForStop(GTFS_FEED_URL, headers, "J30N"),
-    fetchArrivalsForStop(GTFS_FEED_URL, headers, "J30S"),
-  ]);
-  const nCount = nArr.filter((a) => a.arrivalInMin >= 0 && a.arrivalInMin <= 30).length;
-  const sCount = sArr.filter((a) => a.arrivalInMin >= 0 && a.arrivalInMin <= 30).length;
-  const chosen = nCount >= sCount ? { arrivals: nArr, stopId: "J30N" } : { arrivals: sArr, stopId: "J30S" };
-  return NextResponse.json(chosen);
+  const requestedStop = overrideStop || envStop;
+  // If user picked a platform (J30N or J30S), use it. Otherwise default to Manhattan-bound (J30N).
+  const stopId = requestedStop === "J30S" ? "J30S" : "J30N";
+  const feedStop = feedStopFor(stopId);
+  const arrivals = await fetchArrivalsForStop(GTFS_FEED_URL, headers, feedStop);
+  return NextResponse.json({ arrivals, stopId });
 }
 
 async function fetchArrivalsForStop(
