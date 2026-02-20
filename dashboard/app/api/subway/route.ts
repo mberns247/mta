@@ -3,7 +3,7 @@ import GtfsRealtimeBindings from "gtfs-realtime-bindings";
 
 const GTFS_FEED_URL = "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-jz";
 const MAX_ARRIVALS = 4;
-const WINDOW_MS = 30 * 60 * 1000; // 30 minutes
+const WINDOW_MS = 90 * 60 * 1000; // 90 minutes (look further ahead to get up to 4 arrivals)
 
 export interface SubwayArrival {
   route: string;
@@ -84,7 +84,7 @@ function parseTripUpdates(feed: { entity?: FeedEntityLike[] }, stopId: string): 
       const timeSec = typeof rawTime === "number" ? rawTime : Number((rawTime as { toNumber?: () => number }).toNumber?.() ?? rawTime);
       const arrivalMs = timeSec * 1000;
       if (arrivalMs < now - 120000) continue; // skip past
-      if (arrivalMs > now + WINDOW_MS) continue; // cap at 30 min
+      if (arrivalMs > now + WINDOW_MS) continue; // cap at window
       const arrivalInMin = Math.max(0, Math.round((arrivalMs - now) / 60000));
       arrivals.push({
         route: routeLabel,
