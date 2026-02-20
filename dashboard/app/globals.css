@@ -1,0 +1,70 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Subway board palette – dark digital display */
+:root {
+  --board-bg: #0c1222;
+  --board-panel: #111827;
+  --board-border: #1e293b;
+  --board-text: #f8fafc;
+  --board-text-dim: #94a3b8;
+  --board-accent: #7dd3fc;
+  --subway-badge: #b45309;
+  --subway-badge-text: #fff;
+  --bus-badge: #0284c7;
+  --bus-badge-text: #fff;
+  --error: #f87171;
+}
+
+/* Clean list for arrival rows */
+.arrival-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Line badge – large circle, no squish */
+.line-badge {
+  flex-shrink: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+.line-badge--subway { background-color: var(--subway-badge); font-size: 1.35rem; }
+.line-badge--bus { background-color: var(--bus-badge); font-size: 0.85rem; }
+
+/* Arrival table – rigid columns, breathing room */
+.arrival-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.arrival-table th,
+.arrival-table td {
+  padding: 1rem 1.25rem;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--board-border);
+}
+.arrival-table tr:last-child td {
+  border-bottom: none;
+}
+.arrival-table .col-line { width: 5rem; text-align: left; }
+.arrival-table .col-direction { padding-left: 1.5rem; }
+.arrival-table .col-time { width: 6rem; text-align: right; padding-left: 1.5rem; }
