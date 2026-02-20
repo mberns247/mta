@@ -126,8 +126,11 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="min-h-screen w-full p-4 pb-10 md:p-6">
-      <div className="mx-auto w-full max-w-2xl" style={{ maxWidth: "42rem" }}>
+    <main className="min-h-screen w-full px-6 pb-10 pt-4 md:px-12 md:pt-6">
+      <div
+        className="w-full"
+        style={{ maxWidth: "42rem", marginLeft: "auto", marginRight: "auto" }}
+      >
         {/* Board-style header: title + live clock + config */}
         <header
           className="mb-6 flex items-center justify-between border-b pb-3"
@@ -269,7 +272,7 @@ export default function DashboardPage() {
                               {a.arrivalInMin}
                             </span>
                             {' '}
-                            <span className="uppercase tracking-wider" style={{ color: "var(--board-accent)", fontSize: "1.5rem", fontWeight: 700 }}>
+                            <span className="uppercase tracking-wider" style={{ color: "var(--board-accent)", fontSize: "0.75rem", fontWeight: 700 }}>
                               MIN
                             </span>
                           </span>
@@ -334,7 +337,7 @@ export default function DashboardPage() {
                               {a.expectedInMin}
                             </span>
                             {' '}
-                            <span className="uppercase tracking-wider" style={{ color: "var(--board-accent)", fontSize: "1.5rem", fontWeight: 700 }}>
+                            <span className="uppercase tracking-wider" style={{ color: "var(--board-accent)", fontSize: "0.75rem", fontWeight: 700 }}>
                               MIN
                             </span>
                           </span>
