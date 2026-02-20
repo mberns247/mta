@@ -131,7 +131,7 @@ export default function DashboardPage() {
         className="w-full"
         style={{ maxWidth: "42rem", marginLeft: "auto", marginRight: "auto" }}
       >
-        {/* Board-style header: title + live clock + config */}
+        {/* Board-style header: title + live clock + config  */}
         <header
           className="mb-6 flex items-center justify-between border-b pb-3"
           style={{ borderColor: "var(--board-border)" }}
